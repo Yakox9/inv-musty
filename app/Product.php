@@ -1,0 +1,27 @@
+<?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Product extends Model
+{
+    protected $table="products";
+
+    public function TypoProduct(){
+        return $this->belongsTo(TypeProduct::class);
+    }
+
+    public function Status(){
+        return $this->belongsTo(Statu::class);
+    }
+
+    public function OrderProducts(){
+        return $this->hasMany(OrderProduct::class);
+    }
+
+    public function Deposit()
+    {
+        return $this->hasMany(Deposit::class);
+    }
+}
