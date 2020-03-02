@@ -18,4 +18,23 @@ class Bill extends Model
     {
         return $this->belongsTo(Currency::class);
     }
+
+    public function createBill($request){
+        $bill = new Bill();
+        $bill->date = $request->date;
+        $bill->iva = $request->iva;
+        $bill->total = $request->total;
+        $bill->id_currency = $request->currency;
+        $bill->id_order = $request->order;
+        $bill->save();
+    }
+    
+    public function updateBill($request,$bill){
+        $bill->date = $request->date;
+        $bill->iva = $request->iva;
+        $bill->total = $request->total;
+        $bill->id_currency = $request->currency;
+        $bill->id_order = $request->order;
+        $bill->update();
+    }
 }

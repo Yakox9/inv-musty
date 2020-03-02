@@ -12,4 +12,16 @@ class TypeRawMaterial extends Model
     {
         return $this->hasMany(RawMaterial::class);
     }
+
+
+    public function createTypeRawMaterial($request){
+        $TS = new TypeRawMaterial();
+        $TS->name = $request->name;
+        $TS->save();
+    }
+
+    public function updateTypeRawMaterial($request,$typeRawMaterial){
+        $typeRawMaterial->name=$request->name;
+        $typeRawMaterial->update();
+    }
 }

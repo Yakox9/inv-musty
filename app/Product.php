@@ -24,4 +24,23 @@ class Product extends Model
     {
         return $this->hasMany(Deposit::class);
     }
+
+
+    public function createProduct($request){
+        $product = new Product();
+        $product->name = $request->name;
+        $product->price = $request->price;
+        $product->id_status = $request->status;
+        $product->id_type_product = $request->typeProduct;
+        $product->save();
+    }
+    
+    public function updateProduct($request,$product){
+        $product->name = $request->name;
+        $product->price = $request->price;
+        $product->id_status = $request->status;
+        $product->id_type_product = $request->typeProduct;
+        $product->update();
+    }
+
 }

@@ -27,4 +27,18 @@ class Statu extends Model
         return $this->hasMany(Product::class);
     }
 
+
+
+    public function createStatus($request){
+        $status = new Statu();
+        $status->name= $request->name;
+        $status->id_type_status = $request->type_status;
+        $status->save();
+    }
+
+    public function updateStatus($request,$status){
+        $status->name= $request->name;
+        $status->id_type_status = $request->type_status;
+        $status->update();
+    }
 }

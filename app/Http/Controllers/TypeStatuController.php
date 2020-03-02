@@ -14,7 +14,7 @@ class TypeStatuController extends Controller
      */
     public function index()
     {
-        //
+        return TypeStatu::get();
     }
 
     /**
@@ -35,7 +35,7 @@ class TypeStatuController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return TypeStatu::createTypeStatus($request);
     }
 
     /**
@@ -46,7 +46,7 @@ class TypeStatuController extends Controller
      */
     public function show(TypeStatu $typeStatu)
     {
-        //
+        return $typeStatu;
     }
 
     /**
@@ -57,7 +57,7 @@ class TypeStatuController extends Controller
      */
     public function edit(TypeStatu $typeStatu)
     {
-        //
+        return $typeStatu;
     }
 
     /**
@@ -69,7 +69,7 @@ class TypeStatuController extends Controller
      */
     public function update(Request $request, TypeStatu $typeStatu)
     {
-        //
+        return $typeStatu->updateTypeStatus($request,$typeStatus);
     }
 
     /**
@@ -80,6 +80,12 @@ class TypeStatuController extends Controller
      */
     public function destroy(TypeStatu $typeStatu)
     {
-        //
+        try{
+
+            $typeStatu->delete();
+            return true;
+        }catch  (Exception $e) {
+            return false;
+        }
     }
 }

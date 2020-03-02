@@ -12,4 +12,15 @@ class TypeProduct extends Model
     {
         return $this->hasMany(Product::class);
     }
+
+    public function createTypeProduct($request){
+        $TP = new TypeProduct();
+        $TP->name = $request->name;
+        $TP->save();
+    }
+
+    public function updateTypeProduct($request,$typeProduct){
+        $typeProduct->name=$request->name;
+        $typeProduct->update();
+    }
 }

@@ -20,4 +20,21 @@ class OrderProduct extends Model
     public function Status(){
         return $this->belongsTo(Statu::class);
     }
+
+    public function createOrderProducts($request){
+        $orderProduct = new OrderProduct();
+        $orderProduct->id_order = $request->order;
+        $orderProduct->id_product = $request->product;
+        $orderProduct->id_status = $request->status;
+        $orderProduct->quantity = $request->quantity;
+        $orderProduct->save();
+    }
+    
+    public function updateOrderProducts($request,$orderProduct){
+        $orderProduct->id_order = $request->order;
+        $orderProduct->id_product = $request->product;
+        $orderProduct->id_status = $request->status;
+        $orderProduct->quantity = $request->quantity;
+        $orderProduct->update();
+    }
 }
