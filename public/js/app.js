@@ -19613,7 +19613,7 @@ var render = function() {
     [
       _c("v-navigation-drawer", { attrs: { app: "" } }),
       _vm._v(" "),
-      _c("v-toolbar", { attrs: { app: "" } }),
+      _c("v-app-bar", { attrs: { app: "" } }),
       _vm._v(" "),
       _c(
         "v-content",
@@ -76052,11 +76052,11 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 
 
-var vuetify = new vuetify__WEBPACK_IMPORTED_MODULE_1___default.a();
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuetify);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuetify__WEBPACK_IMPORTED_MODULE_1___default.a);
 new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
   el: '#app',
   router: _js_routes_js__WEBPACK_IMPORTED_MODULE_3__["default"],
+  vuetify: new vuetify__WEBPACK_IMPORTED_MODULE_1___default.a(),
   render: function render(h) {
     return h(_js_views_App__WEBPACK_IMPORTED_MODULE_2__["default"]);
   }
