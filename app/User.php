@@ -5,10 +5,11 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Passport\HasApiTokens;
 use App\People;
 class User extends Authenticatable
 {
-    use Notifiable;
+    use HasApiTokens, Notifiable;
 
     protected $table="users";
     /**
@@ -17,7 +18,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+         'email', 'password','username','id_role',
     ];
 
 
@@ -44,7 +45,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function createUser($request){
+    public static function createUser($request){
         $people = new People();
         $people->name = $request->name;
         $people->ic = $request->ic;
@@ -54,12 +55,17 @@ class User extends Authenticatable
         $user->email = $request->email;
         $user->id=$people->id;
         $user->password= bcrypt($request->password);
-        $user->id_role= $request->role;
+        $user->id_role= $request->id_role;
+        $user->username=$request->username;
         $user->save();
+        $user->name =$people->name;
+        $user->name=$people->ic;
+
+        return $user;
     }
 
     public function updateUser($request,$user){
-        $people = $user->People();
+        $people = People::findOrFail($user->id);
         $user->email = $request->email;
         $user->id_role= $request->role;
         if($request->password !=null){
@@ -69,18 +75,8 @@ class User extends Authenticatable
         $people->ic = $request->ic;
         $user->update();
         $people->update();
-    }
-
-    public function authUser($request){
-        $user = User::where('username','=',$request->username)->first();
-        if(!isset($user)){
-            return bcrypt(2);
-        }else{
-            if($user->password == bcrypt($request->password)){
-                return bcrypt(1);
-            }else{
-                return bcrypt(0);
-            }
-        }    
+        $user->name =$people->name;
+        $user->name=$people->ic;
+        return $user;
     }
 }

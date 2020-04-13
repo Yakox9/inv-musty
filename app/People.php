@@ -7,9 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class People extends Model
 {
 
-    protected $table= "people";
+    protected $table= "peoples";
 
-
+    protected $fillable = [
+        'name', 'ic',
+    ];
     public function User()
     {
         return $this->hasOne(User::class, 'id');

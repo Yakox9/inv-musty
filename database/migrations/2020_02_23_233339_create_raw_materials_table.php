@@ -15,10 +15,15 @@ class CreateRawMaterialsTable extends Migration
     {
         Schema::create('raw_materials', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name',50);
-            $table->bigInteger('id_status');
-            $table->bigInteger('id_type_raw_materials');
-            $table->bigInteger('id_provider');
+            $table->string('name',50)->unique();
+            $table->bigInteger('id_status')->unsigned();
+            $table->bigInteger('id_type_raw_materials')->unsigned();
+            $table->bigInteger('id_provider')->unsigned();
+
+
+            $table->foreign('id_type_raw_materials')->references('id')->on('type_raw_materials');
+            $table->foreign('id_status')->references('id')->on('status');
+            $table->foreign('id_provider')->references('id')->on('providers');
             $table->timestamps();
         });
     }

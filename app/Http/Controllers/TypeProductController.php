@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\TypeProduct;
 use Illuminate\Http\Request;
-
+use Illuminate\Http\Response;
 class TypeProductController extends Controller
 {
     /**
@@ -14,7 +14,11 @@ class TypeProductController extends Controller
      */
     public function index()
     {
-        //
+        $typeProduct = TypeProduct::all();
+        return response()->json([
+            "data"=>$typeProduct,
+            "status"=>Response::HTTP_OK
+        ],Response::HTTP_OK);
     }
 
     /**
@@ -35,7 +39,12 @@ class TypeProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $typeProduct = TypeProduct::create($request->all());
+        return response()->json([
+            "message"=>"Type Product created Success",
+            "data"=>$typeProduct,
+            "status"=>Response::HTTP_CREATED
+        ],Response::HTTP_CREATED);
     }
 
     /**
@@ -46,7 +55,11 @@ class TypeProductController extends Controller
      */
     public function show(TypeProduct $typeProduct)
     {
-        //
+        return response()->json([
+            "message"=>"Get Type Product Success",
+            "data:"=>$typeProduct,
+            "status"=>Response::HTTP_OK
+        ], Response::HTTP_OK);
     }
 
     /**
@@ -69,7 +82,12 @@ class TypeProductController extends Controller
      */
     public function update(Request $request, TypeProduct $typeProduct)
     {
-        //
+        $typeProduct->update($request->all());
+        return response()->json([
+            "message"=>"Type Product Updated Success.",
+            "data"=>$typeProduct,
+            "status"=>Response::HTTP_OK
+        ], Response::HTTP_OK);
     }
 
     /**
@@ -80,6 +98,11 @@ class TypeProductController extends Controller
      */
     public function destroy(TypeProduct $typeProduct)
     {
-        //
+        $typeProduct->delete();
+        return response()->json([
+            "message"=>"Type Product Deleted Success.",
+            "data"=>$typeProduct,
+            "status"=>Response::HTTP_OK
+        ], Response::HTTP_OK);
     }
 }

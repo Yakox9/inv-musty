@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Product;
+use App\Statu;
+use App\TypeProduct;
+
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class ProductController extends Controller
 {
@@ -14,7 +18,15 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        $products = Product::all();
+        foreach ($products as $key => $product) {
+            $product->id_status =Statu::findOrFail($product->id_status)->name;
+            $product->id_type_product =TypeProduct::findOrFail($product->id_type_product)->name;
+        }
+        return response()->json([
+            "data"=>$products,
+            "status"=>Response::HTTP_OK
+        ],Response::HTTP_OK);
     }
 
     /**
@@ -35,7 +47,15 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $product = Product::create($request->all());
+
+        $product->id_status =Statu::findOrFail($product->id_status)->name;
+        $product->id_type_product =TypeProduct::findOrFail($product->id_type_product)->name;
+        return response()->json([
+            "message"=>"Product has been Successfully created",
+            "data"=>$product,
+            "status"=>Response::HTTP_CREATED
+        ],Response::HTTP_CREATED);
     }
 
     /**
@@ -46,7 +66,13 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        //
+        $product->id_status =Statu::findOrFail($product->id_status)->name;
+        $product->id_type_product =TypeProduct::findOrFail($product->id_type_product)->name;
+        return response()->json([
+            "message"=>"Get Product has been Successfully",
+            "data"=>$product,
+            "status"=>Response::HTTP_OK
+        ],Response::HTTP_OK);
     }
 
     /**
@@ -69,7 +95,14 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        //
+        $product->update($request->all());
+        $product->id_status =Statu::findOrFail($product->id_status)->name;
+        $product->id_type_product =TypeProduct::findOrFail($product->id_type_product)->name;
+        return response()->json([
+            "message"=>"Product has been Successfully Updated",
+            "data"=>$product,
+            "status"=>Response::HTTP_OK
+        ],Response::HTTP_OK);
     }
 
     /**
@@ -80,6 +113,13 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        //
+        $product->delete();
+        $product->id_status =Statu::findOrFail($product->id_status)->name;
+        $product->id_type_product =TypeProduct::findOrFail($product->id_type_product)->name;
+        return response()->json([
+            "message"=>"Product has been Successfully Deleted",
+            "data"=>$product,
+            "status"=>Response::HTTP_OK
+        ],Response::HTTP_OK);
     }
 }

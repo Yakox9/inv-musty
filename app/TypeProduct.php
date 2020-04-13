@@ -8,6 +8,10 @@ class TypeProduct extends Model
 {
     protected $table = "type_products";
 
+    protected $fillable = [
+        'name',
+   ];
+
     public function Product()
     {
         return $this->hasMany(Product::class);

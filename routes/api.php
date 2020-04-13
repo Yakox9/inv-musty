@@ -13,6 +13,27 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
+/*Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
+});*/
+
+
+Route::post('/login', 'UserController@login');
+Route::post('/register', 'UserController@register');
+Route::group(['middleware'=>'auth:api'], function () {
+    Route::apiResource('/currencies','CurrencyController');
+    Route::apiResource('/type-status','TypeStatuController');
+    Route::apiResource('/type-raw-materials','TypeRawMaterialController');
+    Route::apiResource('/type-Products','TypeProductController');
+    Route::apiResource('/status','StatuController');
+    Route::apiResource('/roles','RoleController');
+    Route::apiResource('/raw-materials','RawMaterialController');
+    Route::apiResource('/providers','ProviderController');
+    Route::apiResource('/product-materials','ProductMaterialController');
+    Route::apiResource('/products','ProductController');
+    Route::apiResource('/order-products','OrderProductController');
+    Route::apiResource('/orders','OrderController');
+    Route::apiResource('/deposit','DepositController');
+    Route::apiResource('/clients','RoleController');
+    Route::apiResource('/bills','BillController');
 });

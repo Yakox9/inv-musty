@@ -17,9 +17,14 @@ class CreateOrdersTable extends Migration
             $table->bigIncrements('id');
             $table->date('date');
             $table->date('delivery_date');
-            $table->bigInteger('id_client');
-            $table->bigInteger('id_user');
-            $table->bigInteger('id_status');
+            $table->bigInteger('id_client')->unsigned();
+            $table->bigInteger('id_user')->unsigned();
+            $table->bigInteger('id_status')->unsigned();
+
+            $table->foreign('id_client')->references('id')->on('clients');
+            $table->foreign('id_user')->references('id')->on('users');
+            $table->foreign('id_status')->references('id')->on('status');
+
             $table->timestamps();
         });
     }

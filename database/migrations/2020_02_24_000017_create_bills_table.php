@@ -18,8 +18,11 @@ class CreateBillsTable extends Migration
             $table->date('date');
             $table->float('iva');
             $table->float('total');
-            $table->bigInteger('id_currency');
-            $table->bigInteger('id_order');
+            $table->bigInteger('id_currency')->unsigned();
+            $table->bigInteger('id_order')->unsigned();
+
+            $table->foreign('id_order')->references('id')->on('currencies');
+            $table->foreign('id_currency')->references('id')->on('orders');
             $table->timestamps();
         });
     }

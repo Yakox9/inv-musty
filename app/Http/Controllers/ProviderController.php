@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Provider;
 use Illuminate\Http\Request;
-
+use Illuminate\Http\Response;
+use App\People;
 class ProviderController extends Controller
 {
     /**
@@ -14,7 +15,17 @@ class ProviderController extends Controller
      */
     public function index()
     {
-        //
+        $providers = Provider::all();
+        foreach ($providers as $key => $provider) {
+            $people = People::findOrFail($provider->id);
+            $provider->name = $people->name;
+            $provider->ic = $people->ic;
+        }
+        return response()->json([
+            "message"=>"Provider created Success",
+            "data"=>$providers,
+            "status"=>Response::HTTP_OK
+        ],Response::HTTP_OK);
     }
 
     /**
@@ -35,7 +46,14 @@ class ProviderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $provider = Provider::createProvider($request);
+
+
+        return response()->json([
+            "message"=>"Provider Has Been Successfully Created",
+            "data"=>$provider,
+            "status"=>Response::HTTP_CREATED
+        ],Response::HTTP_CREATED);
     }
 
     /**
@@ -46,7 +64,14 @@ class ProviderController extends Controller
      */
     public function show(Provider $provider)
     {
-        //
+        $people = People::findOrFail($provider->id);
+        $provider->name = $people->name;
+        $provider->ic = $people->ic;
+        return response()->json([
+            "message"=>"Get Provider Has Been Successfully",
+            "data"=>$provider,
+            "status"=>Response::HTTP_OK
+        ],Response::HTTP_OK);
     }
 
     /**
@@ -69,7 +94,12 @@ class ProviderController extends Controller
      */
     public function update(Request $request, Provider $provider)
     {
-        //
+        $provider = Provider::updateProvider($request);
+        return response()->json([
+            "message"=>"Provider Has Been Successfully Updated",
+            "data"=>$provider,
+            "status"=>Response::HTTP_OK
+        ],Response::HTTP_OK);
     }
 
     /**
@@ -79,7 +109,13 @@ class ProviderController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(Provider $provider)
-    {
-        //
+    {   $people = People::findOrFail($provider->id);
+        $provider->delete();
+        $people->delete();
+        return response()->json([
+            "message"=>"Provider Has Been Successfully Deleted",
+            "data"=>$provider,
+            "status"=>Response::HTTP_OK
+        ],Response::HTTP_OK);
     }
 }

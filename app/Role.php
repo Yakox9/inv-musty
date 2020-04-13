@@ -8,7 +8,9 @@ class Role extends Model
 {
     protected $table = "roles";
 
-
+    protected $fillable = [
+        'name',
+   ];
 
     public function User()
     {
@@ -23,7 +25,7 @@ class Role extends Model
 
     public function updateRole($request,$role){
         $role->name = $request->name;
-        $role->update();  
+        $role->update();
     }
 
 }

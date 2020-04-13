@@ -6,8 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class OrderProduct extends Model
 {
-    protected $primaryKey = 'id_order';
     protected $table = "order_products";
+
+    protected $fillable = [
+        'id_order','id_product','id_status','quantity',
+   ];
 
     public function Product(){
         return $this->belongsTo(Product::class);
@@ -29,7 +32,7 @@ class OrderProduct extends Model
         $orderProduct->quantity = $request->quantity;
         $orderProduct->save();
     }
-    
+
     public function updateOrderProducts($request,$orderProduct){
         $orderProduct->id_order = $request->order;
         $orderProduct->id_product = $request->product;

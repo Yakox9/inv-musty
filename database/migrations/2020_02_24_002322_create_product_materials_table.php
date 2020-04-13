@@ -14,12 +14,11 @@ class CreateProductMaterialsTable extends Migration
     public function up()
     {
         Schema::create('product_materials', function (Blueprint $table) {
+            $table->bigIncrements('id');
             $table->bigInteger('id_product')->unsigned();
             $table->bigInteger('id_raw_material')->unsigned();
             $table->integer('quantity');
             $table->timestamps();
-
-            $table->primary('id_product');
             $table->foreign('id_raw_material')->references('id')->on('raw_materials');
             $table->foreign('id_product')->references('id')->on('products');
         });

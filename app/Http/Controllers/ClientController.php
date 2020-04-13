@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Client;
+use App\People;
 use Illuminate\Http\Request;
-
+use Illuminate\Http\Response;
 class ClientController extends Controller
 {
     /**
@@ -14,7 +15,17 @@ class ClientController extends Controller
      */
     public function index()
     {
-        //
+        $clients = Client::all();
+        foreach ($clients as $key => $client) {
+            $people = People::findOrFail($client->id);
+            $client->name = $people->name;
+            $client->ic = $people->ic;
+        }
+        return response()->json([
+            "message"=>"Provider created Success",
+            "data"=>$clients,
+            "status"=>Response::HTTP_OK
+        ],Response::HTTP_OK);
     }
 
     /**
@@ -35,7 +46,14 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $client = Client::createClient($request);
+
+
+        return response()->json([
+            "message"=>"Client Has Been Successfully Created",
+            "data"=>$client,
+            "status"=>Response::HTTP_CREATED
+        ],Response::HTTP_CREATED);
     }
 
     /**
@@ -46,7 +64,14 @@ class ClientController extends Controller
      */
     public function show(Client $client)
     {
-        //
+        $people = People::findOrFail($client->id);
+        $client->name = $people->name;
+        $client->ic = $people->ic;
+        return response()->json([
+            "message"=>"Get Client Has Been Successfully",
+            "data"=>$client,
+            "status"=>Response::HTTP_OK
+        ],Response::HTTP_OK);
     }
 
     /**
@@ -69,7 +94,15 @@ class ClientController extends Controller
      */
     public function update(Request $request, Client $client)
     {
-        //
+        $client = Client::updateClient($request);
+        $people = People::findOrFail($client->id);
+        $client->name = $people->name;
+        $client->ic = $people->ic;
+        return response()->json([
+            "message"=>"Client Has Been Successfully Updated",
+            "data"=>$client,
+            "status"=>Response::HTTP_OK
+        ],Response::HTTP_OK);
     }
 
     /**
@@ -80,6 +113,14 @@ class ClientController extends Controller
      */
     public function destroy(Client $client)
     {
-        //
+        $client->delete();
+        $people = People::findOrFail($client->id);
+        $client->name = $people->name;
+        $client->ic = $people->ic;
+        return response()->json([
+            "message"=>"Client Has Been Successfully Updated",
+            "data"=>$client,
+            "status"=>Response::HTTP_OK
+        ],Response::HTTP_OK);
     }
 }

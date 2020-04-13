@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Statu;
+use App\TypeStatu;
+
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class StatuController extends Controller
 {
@@ -14,7 +17,14 @@ class StatuController extends Controller
      */
     public function index()
     {
-        //
+        $status = Statu::all();
+        foreach ($status as $key => $statu) {
+            $statu->id_type_status = TypeStatu::findOrFail($statu->id_type_status)->name;
+        }
+        return response()->json([
+            "data"=>$status,
+            "status"=>Response::HTTP_OK
+        ],Response::HTTP_OK);
     }
 
     /**
@@ -35,7 +45,13 @@ class StatuController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $status = Statu::create($request->all());
+        $status->id_type_status = TypeStatu::findOrFail($status->id_type_status)->name;
+        return response()->json([
+            "message"=>"Status created Success",
+            "data"=>$status,
+            "status"=>Response::HTTP_CREATED
+        ],Response::HTTP_CREATED);
     }
 
     /**
@@ -44,9 +60,15 @@ class StatuController extends Controller
      * @param  \App\Statu  $statu
      * @return \Illuminate\Http\Response
      */
-    public function show(Statu $statu)
+    public function show(Statu $status)
     {
-        //
+
+        $status->id_type_status = TypeStatu::findOrFail($status->id_type_status)->name;
+        return response()->json([
+            "message"=>"Get Status Success",
+            "data:"=>$status,
+            "status"=>Response::HTTP_OK
+        ], Response::HTTP_OK);
     }
 
     /**
@@ -67,9 +89,15 @@ class StatuController extends Controller
      * @param  \App\Statu  $statu
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Statu $statu)
+    public function update(Request $request, Statu $status)
     {
-        //
+        $status->update($request->all());
+        $status->id_type_status = TypeStatu::findOrFail($status->id_type_status)->name;
+        return response()->json([
+            "message"=>"Status Updated Success.",
+            "data"=>$status,
+            "status"=>Response::HTTP_OK
+        ], Response::HTTP_OK);
     }
 
     /**
@@ -80,6 +108,12 @@ class StatuController extends Controller
      */
     public function destroy(Statu $statu)
     {
-        //
+        $status->delete();
+        $status->id_type_status = TypeStatu::findOrFail($status->id_type_status)->name;
+        return response()->json([
+            "message"=>"Status Deleted Success.",
+            "data"=>$status,
+            "status"=>Response::HTTP_OK
+        ], Response::HTTP_OK);
     }
 }

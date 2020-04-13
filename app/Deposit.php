@@ -8,6 +8,9 @@ class Deposit extends Model
 {
     protected $table = "deposits";
 
+    protected $fillable = [
+        'quantity','date','id_product','id_raw_material',
+    ];
 
     public function Product()
     {
@@ -27,7 +30,7 @@ class Deposit extends Model
         $deposit->quantity = $request->quantity;
         $deposit->save();
     }
-    
+
     public function updateDeposit($request,$deposit){
         $deposit->date = $request->date;
         $deposit->id_product = $request->product;

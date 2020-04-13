@@ -14,8 +14,8 @@ class CreateProvidersTable extends Migration
     public function up()
     {
         Schema::create('providers', function (Blueprint $table) {
-            $table->bigInteger('id');
-            $table->string('rif',30);
+            $table->bigInteger('id')->primary()->unsigned();
+            $table->string('rif',30)->unique();
             $table->bigInteger('phone_number');
             $table->timestamps();
         });

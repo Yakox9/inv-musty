@@ -8,7 +8,9 @@ class Order extends Model
 {
     protected $table = "orders";
 
-
+    protected $fillable = [
+        'date','delivery_date','id_client','id_user','id_status',
+    ];
 
 
     public function Status()
@@ -37,13 +39,13 @@ class Order extends Model
         $order->id_status = $request->id_status;
         $order->save();
     }
-    
+
     public function updateOrder($request,$order){
         $order->date = $request->date;
         $order->delivery_date = $request->delivery_date;
         $order->id_client = $request->id_client;
         $order->id_user = $request->id_user;
         $order->id_status = $request->id_status;
-        $order->update(); 
+        $order->update();
     }
 }

@@ -14,7 +14,7 @@ class CreateClientsTable extends Migration
     public function up()
     {
         Schema::create('clients', function (Blueprint $table) {
-            $table->bigInteger('id');
+            $table->bigInteger('id')->unsigned()->primary();
             $table->bigInteger('phone_number');
             $table->string('address',80);
             $table->timestamps();

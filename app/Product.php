@@ -8,6 +8,10 @@ class Product extends Model
 {
     protected $table="products";
 
+    protected $fillable = [
+        'name','price','id_status','id_type_product',
+   ];
+
     public function TypoProduct(){
         return $this->belongsTo(TypeProduct::class);
     }
@@ -34,7 +38,7 @@ class Product extends Model
         $product->id_type_product = $request->typeProduct;
         $product->save();
     }
-    
+
     public function updateProduct($request,$product){
         $product->name = $request->name;
         $product->price = $request->price;

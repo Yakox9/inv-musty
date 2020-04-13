@@ -9,7 +9,13 @@ class Bill extends Model
 
     protected $table = "bills";
 
-
+    protected $fillable = [
+        "date",
+        "iva",
+        "total",
+        "id_currency",
+        "id_order"
+    ];
     public function Order()
     {
         return $this->belongsTo(Order::class);
@@ -28,7 +34,7 @@ class Bill extends Model
         $bill->id_order = $request->order;
         $bill->save();
     }
-    
+
     public function updateBill($request,$bill){
         $bill->date = $request->date;
         $bill->iva = $request->iva;

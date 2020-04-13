@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Deposit;
-use Illuminate\Http\Request;
+use App\Product;
+use App\RawMaterial;
 
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 class DepositController extends Controller
 {
     /**
@@ -14,7 +17,15 @@ class DepositController extends Controller
      */
     public function index()
     {
-        //
+        $deposits = Deposit::all();
+        foreach ($deposits as $key => $deposit) {
+            $deposit->id_product =Product::findOrFail($deposit->id_product)->name;
+            $deposit->id_raw_material =RawMaterial::findOrFail($deposit->id_raw_material)->name;
+        }
+        return response()->json([
+            "data"=>$deposits,
+            "status"=>Response::HTTP_OK
+        ],Response::HTTP_OK);
     }
 
     /**
@@ -35,7 +46,14 @@ class DepositController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $deposit = Deposit::create($request->all());
+        $deposit->id_product =Product::findOrFail($deposit->id_product)->name;
+        $deposit->id_raw_material =RawMaterial::findOrFail($deposit->id_raw_material)->name;
+        return response()->json([
+            "message"=>"Deposit has been Successfully created",
+            "data"=>$deposit,
+            "status"=>Response::HTTP_CREATED
+        ],Response::HTTP_CREATED);
     }
 
     /**
@@ -46,7 +64,13 @@ class DepositController extends Controller
      */
     public function show(Deposit $deposit)
     {
-        //
+        $deposit->id_product =Product::findOrFail($deposit->id_product)->name;
+        $deposit->id_raw_material =RawMaterial::findOrFail($deposit->id_raw_material)->name;
+        return response()->json([
+            "message"=>"Get Deposit has been Successfully",
+            "data"=>$deposit,
+            "status"=>Response::HTTP_OK
+        ],Response::HTTP_OK);
     }
 
     /**
@@ -69,7 +93,14 @@ class DepositController extends Controller
      */
     public function update(Request $request, Deposit $deposit)
     {
-        //
+        $deposit->update($request->all());
+        $deposit->id_product =Product::findOrFail($deposit->id_product)->name;
+        $deposit->id_raw_material =RawMaterial::findOrFail($deposit->id_raw_material)->name;
+        return response()->json([
+            "message"=>"Deposit has been Successfully Updated",
+            "data"=>$deposit,
+            "status"=>Response::HTTP_OK
+        ],Response::HTTP_OK);
     }
 
     /**
@@ -80,6 +111,13 @@ class DepositController extends Controller
      */
     public function destroy(Deposit $deposit)
     {
-        //
+        $deposit->delete();
+        $deposit->id_product =Product::findOrFail($deposit->id_product)->name;
+        $deposit->id_raw_material =RawMaterial::findOrFail($deposit->id_raw_material)->name;
+        return response()->json([
+            "message"=>"Deposit has been Successfully Updated",
+            "data"=>$deposit,
+            "status"=>Response::HTTP_OK
+        ],Response::HTTP_OK);
     }
 }

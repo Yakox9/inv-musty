@@ -8,6 +8,10 @@ class TypeStatu extends Model
 {
     protected $table = "type_status";
 
+    protected $fillable = [
+        'name',
+   ];
+
     public function Status()
     {
         return $this->hasMany(Statu::class);
@@ -16,22 +20,12 @@ class TypeStatu extends Model
     public static function createTypeStatus($request){
         $TS = new TypeStatu();
         $TS->name = $request->name;
-        try{
-
-            $TS->save();
-            return true;
-        }catch (Exception $e) {
-            return false;
-        }
+        return $TS;
     }
 
     public function updateTypeStatus($request,$typeStatus){
         $typeStatus->name=$request->name;
-        try{
-            $typeStatus->update();
-            return true;
-        }catch (Exception $e) {
-            return false;
-        }
+        $typeStatus->update();
+        return $typeStatus;
     }
 }

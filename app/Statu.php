@@ -8,7 +8,9 @@ class Statu extends Model
 {
     protected $table = "status";
 
-
+    protected $fillable = [
+        'name', 'id_type_status',
+   ];
 
     public function TypeStatus()
     {

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\TypeStatu;
 use Illuminate\Http\Request;
-
+use Illuminate\Http\Response;
 class TypeStatuController extends Controller
 {
     /**
@@ -14,7 +14,12 @@ class TypeStatuController extends Controller
      */
     public function index()
     {
-        return TypeStatu::get();
+
+        $typeStatus = TypeStatu::all();
+        return response()->json([
+            "data"=>$typeStatus,
+            "status"=>Response::HTTP_OK
+        ],Response::HTTP_OK);
     }
 
     /**
@@ -35,7 +40,13 @@ class TypeStatuController extends Controller
      */
     public function store(Request $request)
     {
-        return TypeStatu::createTypeStatus($request);
+
+        $typeStatus = TypeStatu::create($request->all());
+        return response()->json([
+            "message"=>"Type Status created Success",
+            "data"=>$typeStatus,
+            "status"=>Response::HTTP_CREATED
+        ],Response::HTTP_CREATED);
     }
 
     /**
@@ -44,9 +55,13 @@ class TypeStatuController extends Controller
      * @param  \App\TypeStatu  $typeStatu
      * @return \Illuminate\Http\Response
      */
-    public function show(TypeStatu $typeStatu)
+    public function show(TypeStatu $typeStatus)
     {
-        return $typeStatu;
+        return response()->json([
+            "message"=>"Get Type Status Success",
+            "data:"=>$typeStatus,
+            "status"=>Response::HTTP_OK
+        ], Response::HTTP_OK);
     }
 
     /**
@@ -57,7 +72,7 @@ class TypeStatuController extends Controller
      */
     public function edit(TypeStatu $typeStatu)
     {
-        return $typeStatu;
+        //
     }
 
     /**
@@ -67,9 +82,15 @@ class TypeStatuController extends Controller
      * @param  \App\TypeStatu  $typeStatu
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, TypeStatu $typeStatu)
+    public function update(Request $request, TypeStatu $typeStatus)
     {
-        return $typeStatu->updateTypeStatus($request,$typeStatus);
+
+        $typeStatus->update($request->all());
+        return response()->json([
+            "message"=>"Type Status Updated Success.",
+            "data"=>$typeStatus,
+            "status"=>Response::HTTP_OK
+        ], Response::HTTP_OK);
     }
 
     /**
@@ -78,14 +99,13 @@ class TypeStatuController extends Controller
      * @param  \App\TypeStatu  $typeStatu
      * @return \Illuminate\Http\Response
      */
-    public function destroy(TypeStatu $typeStatu)
+    public function destroy(TypeStatu $typeStatus)
     {
-        try{
-
-            $typeStatu->delete();
-            return true;
-        }catch  (Exception $e) {
-            return false;
-        }
+        $typeStatus->delete();
+        return response()->json([
+            "message"=>"Type Status Deleted Success.",
+            "data"=>$typeStatus,
+            "status"=>Response::HTTP_OK
+        ], Response::HTTP_OK);
     }
 }
